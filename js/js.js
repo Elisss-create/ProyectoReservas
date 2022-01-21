@@ -3,15 +3,14 @@ var botonReservar = document.querySelector("#botonReservar");
 botonReservar.addEventListener("click", function (event) {
     event.preventDefault();
 
-    var form = document.querySelector("#formReserva");
-    var nombre = form.nombre.value;
-    var fecha = form.fecha.value;
-    var horaD = form.horaDesde.value;
-    var horaH = form.horaHasta.value;
-    var sala = form.sala.value;
+    var form= document.querySelector("#formReserva");
 
+    var usuario = capturarDatosUsuario(form);
+    console.log(usuario);
 
-    tabla = document.querySelector("#tablaClientes");
+    var tabla = document.querySelector("#tablaClientes");
+
+    //creamos td y tr de los campos de elementos
     clienteTr = document.createElement("tr");
     nombreTd = document.createElement("td");
     fechaTd = document.createElement("td");
@@ -19,18 +18,19 @@ botonReservar.addEventListener("click", function (event) {
     horaHastaTd = document.createElement("td");
     salaTd = document.createElement("td");
 
-    nombreTd.textContent = nombre;
-    fechaTd.textContent = fecha;
-    horaDesdeTd.textContent = horaD;
-    horaHastaTd.textContent = horaH;
-    salaTd.textContent = sala;
+    //Asigno los valores a la propiedad textContent 
+    nombreTd.textContent = usuario.nombre;
+    fechaTd.textContent = usuario.fecha;
+    horaDesdeTd.textContent = usuario.horaD;
+    horaHastaTd.textContent = usuario.horaH;
+    salaTd.textContent = usuario.sala;
 
 
-    if (sala === "Seleccionar" || nombre === "") {
+    if (usuario.sala === "Seleccionar" || usuario.nombre === "") {
         alert("Complete los campos");
 
     } else {
-
+        //asignacion de los tr y td a la tabla
         tabla.appendChild(clienteTr);
         clienteTr.appendChild(nombreTd);
         clienteTr.appendChild(fechaTd);
@@ -39,11 +39,16 @@ botonReservar.addEventListener("click", function (event) {
         clienteTr.appendChild(salaTd);
     }
 
-    console.log(nombre);
-    console.log(fecha);
-    console.log(horaD);
-    console.log(horaH);
-    console.log(sala);
 });
 
 
+function capturarDatosUsuario(form) {
+    var usuario = {
+         nombre :form.nombre.value,
+         fecha :form.fecha.value,
+         horaD :form.horaDesde.value,
+         horaH :form.horaHasta.value,
+         sala :form.sala.value
+    }
+    return usuario;
+}
